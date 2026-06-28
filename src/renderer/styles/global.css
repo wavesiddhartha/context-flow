@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Colors */
+  --bg-base:       #F2EFE9;
+  --bg-elevated:   #EAE6DD;
+  --bg-surface:    #E2DED4;
+  --bg-hover:      #E6E2D8;
+  --bg-active:     #FAF9F6;
+  --bg-overlay:    rgba(242, 239, 233, 0.95);
+
+  --border:        rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
+  --border-focus:  rgba(0, 0, 0, 0.45);
+
+  --text-primary:  #121211;
+  --text-secondary:#4D4C47;
+  --text-muted:    #8E8C84;
+  --text-inverse:  #FAF9F6;
+
+  --accent:        #121211;
+  --accent-dim:    rgba(18, 18, 17, 0.06);
+  --accent-hover:  rgba(18, 18, 17, 0.10);
+
+  --blue:          #121211;
+  --blue-dim:      rgba(18, 18, 17, 0.06);
+  --green:         #1d6b38;
+  --green-dim:     rgba(29, 107, 56, 0.08);
+  --amber:         #966000;
+  --amber-dim:     rgba(150, 96, 0, 0.08);
+  --red:           #b91c1c;
+  --red-dim:       rgba(185, 28, 28, 0.08);
+  --purple:        #6b21a8;
+  --purple-dim:    rgba(107, 33, 168, 0.08);
+
+  /* Recording red pulse */
+  --recording:     #b91c1c;
+
+  /* Typography */
+  --font-sans:   'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif:  'Playfair Display', Georgia, serif;
+  --font-mono:   'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Sizing */
+  --radius-sm:   3px;
+  --radius:      6px;
+  --radius-lg:   10px;
+  --radius-xl:   14px;
+  --radius-pill: 999px;
+
+  /* Sidebar */
+  --sidebar-width: 250px;
+
+  /* Scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+}
+
+/* Paper noise overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Selectable text in message areas */
+.selectable { user-select: text; cursor: text; }
+
+/* Focus visible */
+*:focus-visible {
+  outline: 1.5px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Code blocks */
+code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg-active);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1px 5px;
+  color: var(--blue);
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg-active);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-primary);
+}
+
+/* Transition */
+.transition { transition: all 0.15s ease; }
+
+/* Drag region for macOS titlebar */
+.drag-region {
+  -webkit-app-region: drag;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Recording pulse animation */
+@keyframes pulse-record {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-fadeIn { animation: fadeIn 0.2s ease forwards; }
+.animate-slideUp { animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
